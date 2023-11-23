@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <ctype.h>
+
+int main() {
+    int charCount = 0;
+    int wordCount = 0;
+    int lineCount = 0;
+    bool inWord = false;
+    bool isNewLine = true;
+    char c;
+    
+    printf("Enter text (Ctrl+D on a new line to finish input):\n");
+
+    while ((c = getchar()) != EOF) {
+        charCount++;
+
+        // Check for newline character
+        if (c == '\n') {
+            lineCount++;
+            isNewLine = true;
+        } else {
+            isNewLine = false;
+        }
+
+        // Check for word boundaries
+        if (isspace(c)) {
+            inWord = false;
+        } else if (!inWord) {
+            inWord = true;
+            wordCount++;
+        }
+    }
+
+    // Adjust line count for the last line if it doesn't end with a newline character
+    if (!isNewLine) {
+        lineCount++;
+    }
+
+    printf("Character count: %d\n", charCount);
+    printf("Word count: %d\n", wordCount);
+    printf("Line count: %d\n", lineCount);
+
+    return 0;
+}
